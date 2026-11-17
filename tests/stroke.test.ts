@@ -24,7 +24,7 @@ describe('T-05 短すぎる線', () => {
 
   it('時間切れで線がない・短すぎるときは0点の白紙', () => {
     const truth = prefectures[0]!.points;
-    expect(judgeStroke([], truth, PAD, config.stroke, config.scoring)).toEqual({ iou: 0, score: 0, blank: true });
+    expect(judgeStroke([], truth, PAD, config.stroke, config.scoring)).toEqual({ iou: 0, feature: 0, score: 0, blank: true });
     expect(judgeStroke(square(20), truth, PAD, config.stroke, config.scoring).blank).toBe(true);
   });
 

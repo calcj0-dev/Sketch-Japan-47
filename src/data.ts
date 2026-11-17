@@ -85,6 +85,11 @@ export function validateConfig(c: Config): void {
   if (!(isNum(s.iouZero) && isNum(s.iouFull) && 0 <= s.iouZero && s.iouZero < s.iouFull && s.iouFull <= 1)) {
     fail('config.scoring は 0 ≤ iouZero < iouFull ≤ 1');
   }
+  if (!(isNum(s.featZero) && isNum(s.featFull) && -1 <= s.featZero && s.featZero < s.featFull && s.featFull <= 1)) {
+    fail('config.scoring は -1 ≤ featZero < featFull ≤ 1');
+  }
+  if (!isNum(s.weightIou) || s.weightIou < 0 || s.weightIou > 1) fail('config.scoring.weightIou は 0〜1');
+  if (!isNum(s.blurFrac) || s.blurFrac <= 0 || s.blurFrac >= 0.5) fail('config.scoring.blurFrac は 0〜0.5');
   const st = c.stroke;
   if (!Number.isInteger(st.minPoints) || st.minPoints < 3) fail('config.stroke.minPoints は3以上の整数');
   if (!isNum(st.minSizeRatio) || st.minSizeRatio < 0 || st.minSizeRatio >= 1) fail('config.stroke.minSizeRatio は 0〜1');

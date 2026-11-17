@@ -3,10 +3,14 @@
   "timeLimitSec": 30,
   "warnAtSec": 5,
   "scoring": {
-    "method": "iou-linear",
+    "method": "iou-feature",
     "grid": 256,
-    "iouZero": 0.20,
-    "iouFull": 0.85
+    "iouZero": 0.35,
+    "iouFull": 0.90,
+    "featZero": 0.10,
+    "featFull": 0.90,
+    "weightIou": 0.4,
+    "blurFrac": 0.035
   },
   "stroke": {
     "minPoints": 8,

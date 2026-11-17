@@ -1,6 +1,6 @@
 // 描いた線の判定と採点（設計書 1.3・3.2）。画面に依存しない
 
-import { iou, toScore, type Point, type ScoringConfig } from './score';
+import { similarity, toScore, type Point, type ScoringConfig } from './score';
 
 export interface StrokeConfig {
   minPoints: number;
@@ -24,6 +24,8 @@ export function isTooShort(points: readonly Point[], padSize: number, cfg: Strok
 export interface StrokeResult {
   /** 重なりの割合（白紙なら 0） */
   iou: number;
+  /** らしさの一致（白紙なら 0） */
+  feature: number;
   score: number;
   /** 線がない・短すぎるまま時間切れになった（0点・「白紙で提出」。要件定義書 v1.2） */
   blank: boolean;
@@ -40,7 +42,7 @@ export function judgeStroke(
   stroke: StrokeConfig,
   scoring: ScoringConfig,
 ): StrokeResult {
-  if (isTooShort(points, padSize, stroke)) return { iou: 0, score: 0, blank: true };
-  const v = iou(points, truth, scoring.grid);
-  return { iou: v, score: toScore(v, scoring), blank: false };
+  if (isTooShort(points, padSize, stroke)) return { iou: 0, feature: 0, score: 0, blank: true };
+  const sim = similarity(points, truth, scoring);
+  return { ...sim, score: toScore(sim, scoring), blank: false };
 }
