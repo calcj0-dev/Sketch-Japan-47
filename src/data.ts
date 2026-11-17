@@ -54,7 +54,7 @@ export interface PrefectureData {
 /** 画面に出す文言で、必ずなければならないもの（comments.* と prefectures.* は別に確かめる） */
 export const REQUIRED_MESSAGES = [
   'app.name', 'app.tagline', 'app.version', 'app.credit',
-  'common.soundOn', 'common.soundOff', 'common.close', 'common.disclaimer', 'common.islandsNote', 'common.basisLink', 'common.privacyLink',
+  'common.soundOn', 'common.soundOff', 'common.close', 'common.islandsNote', 'common.basisLink', 'common.privacyLink',
   'title.single', 'title.challenge', 'title.challengeResume',
   'draw.prompt', 'draw.hint', 'draw.timeLeft', 'draw.tooShort', 'draw.timeUp', 'draw.progress',
   'result.score', 'result.comment', 'result.next', 'result.retrySame', 'result.share', 'result.shareImage', 'result.saveImage', 'result.toTitle',

@@ -88,9 +88,9 @@ export function openPrivacy(): void {
   ]);
 }
 
-/** 下の注意書き（免責。タイトルでは採点のしくみ・プライバシー・クレジットも） */
+/** 下の注意書き（タイトルでは採点のしくみ・プライバシー・クレジット。免責は出さない：U3） */
 export function footerNotes(withMenu: boolean): HTMLElement {
-  const children: Node[] = [el('p', { class: 'note', text: t('common.disclaimer') })];
+  const children: Node[] = [];
   if (withMenu) {
     children.push(
       el('p', { class: 'footer-menu' }, [
