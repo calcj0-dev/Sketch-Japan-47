@@ -54,6 +54,23 @@ function placeDrawn(p: Prefecture, drawn: readonly Point[], toPx: Tf): Tf | unde
   return (x, y) => toPx(p.mapX + b.cx + (x - a.cx) * k, p.mapY + b.cy + (y - a.cy) * k);
 }
 
+/** 沖縄県を除く46県の位置と形が、W×H の中に余白 pad を残して収まる変換（km → 画像の座標） */
+export function fitMainland(W: number, H: number, pad: number): { toPx: Tf; scale: number } {
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  for (const p of prefectures) {
+    if (p.id === OKINAWA) continue;
+    for (const [x, y] of p.points) {
+      minX = Math.min(minX, p.mapX + x);
+      maxX = Math.max(maxX, p.mapX + x);
+      minY = Math.min(minY, p.mapY + y);
+      maxY = Math.max(maxY, p.mapY + y);
+    }
+  }
+  const scale = Math.min((W - pad * 2) / (maxX - minX), (H - pad * 2) / (maxY - minY));
+  const offX = (W - (maxX - minX) * scale) / 2, offY = (H - (maxY - minY) * scale) / 2;
+  return { toPx: (x, y) => [(x - minX) * scale + offX, (y - minY) * scale + offY], scale };
+}
+
 export function renderMapImage(entries: Record<string, MapEntry>, average: number): HTMLCanvasElement {
   const { imageSize: S, padding: pad, okinawaInset: inset } = config.map;
   const c = document.createElement('canvas');
@@ -63,20 +80,7 @@ export function renderMapImage(entries: Record<string, MapEntry>, average: numbe
   ctx.fillStyle = COLORS.bg;
   ctx.fillRect(0, 0, S, S);
 
-  // 縮尺：沖縄県を除く46県の位置と形が入る範囲を、余白を残して収める
-  const main = prefectures.filter((p) => p.id !== OKINAWA);
-  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-  for (const p of main) {
-    for (const [x, y] of p.points) {
-      minX = Math.min(minX, p.mapX + x);
-      maxX = Math.max(maxX, p.mapX + x);
-      minY = Math.min(minY, p.mapY + y);
-      maxY = Math.max(maxY, p.mapY + y);
-    }
-  }
-  const scale = Math.min((S - pad * 2) / (maxX - minX), (S - pad * 2) / (maxY - minY));
-  const offX = (S - (maxX - minX) * scale) / 2, offY = (S - (maxY - minY) * scale) / 2;
-  const toPx: Tf = (x, y) => [(x - minX) * scale + offX, (y - minY) * scale + offY];
+  const { toPx, scale } = fitMainland(S, S, pad);
 
   // 沖縄県：左上の枠の真ん中に、同じ縮尺で
   const oki = prefectures.find((p) => p.id === OKINAWA)!;

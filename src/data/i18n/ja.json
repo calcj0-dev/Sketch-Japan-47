@@ -15,9 +15,15 @@
   },
   "title": {
     "single": "フリープレイ",
+    "singleDesc": "気軽に1県ずつ。何度でも",
     "challenge": "47都道府県チャレンジ",
-    "challengeResume": "47都道府県チャレンジ（続きから {n}/47）",
-    "zukan": "図鑑（{n}/47）"
+    "challengeDesc": "全県を通して、平均点と日本地図を出そう",
+    "resumeTag": "続きから {n}/47",
+    "zukan": "図鑑",
+    "zukanCount": "{n} / 47",
+    "step1": "県名が出る",
+    "step2": "{sec}秒で1筆描く",
+    "step3": "本物と重ねて採点"
   },
   "zukan": {
     "heading": "図鑑",

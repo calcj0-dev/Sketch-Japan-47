@@ -209,3 +209,68 @@ a.btn { text-decoration: none; display: block; text-align: center; }
 .share-row .btn.x { background: #111; border-color: #111; color: #fff; flex-basis: 100%; }
 .share-row .btn { font-size: 15px; padding: 12px 8px; }
 .image-preview { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border); display: block; }
+
+/* タイトル */
+.title-hero { display: block; margin: 4px auto 0; }
+.title h1 { margin: 8px 0 6px; }
+.title .tagline { margin: 0 0 14px; font-size: 15px; }
+.steps {
+  list-style: none;
+  counter-reset: step;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  margin: 0 0 18px;
+  padding: 0;
+  font-size: 13px;
+}
+.steps li { counter-increment: step; display: flex; align-items: center; gap: 4px; }
+.steps li::before {
+  content: counter(step);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+.steps li + li::after { content: none; }
+.steps li:not(:last-child)::after { content: '→'; color: var(--muted); margin-left: 4px; }
+
+.mode-list { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-bottom: 14px; }
+.mode-card {
+  font: inherit;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 2px solid var(--accent);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+}
+.mode-card.primary { background: var(--accent); color: var(--accent-ink); }
+.mode-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.mode-label { font-size: 17px; font-weight: 800; }
+.mode-card:not(.primary) .mode-label { color: var(--accent); }
+.mode-tag {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #e3f3f0;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.mode-desc { font-size: 13px; opacity: 0.85; }
+.zukan-bar { display: block; height: 8px; border-radius: 4px; background: var(--border); overflow: hidden; }
+.zukan-bar-fill { display: block; height: 100%; background: var(--accent); }
