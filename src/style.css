@@ -97,3 +97,57 @@ h1 { color: var(--accent); margin: 48px 0 8px; font-size: 28px; text-align: cent
 }
 .btn.primary { background: var(--accent); color: var(--accent-ink); }
 .btn.ghost { border-color: transparent; background: none; color: var(--muted); }
+
+.bar-left, .bar-right { display: flex; align-items: center; gap: 8px; }
+.sound-btn { border: none; background: none; font-size: 20px; padding: 4px; cursor: pointer; line-height: 1; }
+
+.links {
+  width: 100%;
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+}
+.links h3 { font-size: 14px; color: var(--muted); margin: 0; font-weight: 700; }
+.link-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.link-card p { margin: 0; font-size: 14px; }
+a.btn { text-decoration: none; display: block; text-align: center; }
+.link { color: var(--accent); font-size: 14px; }
+
+.footer { width: 100%; margin-top: 20px; text-align: center; }
+.footer-menu { display: flex; justify-content: center; gap: 16px; margin: 8px 0; }
+.text-btn {
+  font: inherit;
+  font-size: 13px;
+  border: none;
+  background: none;
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.modal {
+  border: none;
+  border-radius: 16px;
+  padding: 20px;
+  max-width: min(440px, calc(100vw - 32px));
+  background: var(--paper);
+  color: var(--ink);
+}
+.modal::backdrop { background: rgba(0, 0, 0, 0.4); }
+.modal h2 { margin: 0 0 12px; font-size: 18px; }
+.modal p { font-size: 14px; line-height: 1.7; margin: 0 0 10px; }
+.modal-links { display: flex; flex-direction: column; gap: 6px; }
+.modal .btn { width: 100%; margin-top: 8px; }

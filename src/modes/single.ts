@@ -1,9 +1,10 @@
-// 1問ずつ（設計書 1.1）。結果の表示は #5 で仕上げる（今は一言とボタンだけ）
+// 1問ずつ（設計書 1.1）と、その結果 S3（F-04）。シェア・画像の保存は #7 で足す
 
 import { config, prefectures, type Prefecture } from '../data';
 import { pickOther } from '../core/shuffle';
 import { t } from '../i18n';
 import { button, el } from '../ui/dom';
+import { footerNotes, mainAppLinks } from '../ui/parts';
 import { showDrawScreen } from '../ui/screens/draw';
 
 let last: Prefecture | undefined;
@@ -23,6 +24,8 @@ export function startSingle(root: HTMLElement, toTitle: () => void, same?: Prefe
           button(t('result.retrySame'), () => startSingle(root, toTitle, pref)),
           button(t('result.toTitle'), toTitle, 'btn ghost'),
         ]),
+        mainAppLinks(),
+        footerNotes(false),
       );
     },
   });

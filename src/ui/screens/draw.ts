@@ -5,8 +5,8 @@ import { commentKey } from '../../core/comment';
 import type { Point } from '../../core/score';
 import { isTooShort, judgeStroke, type StrokeResult } from '../../core/stroke';
 import { t } from '../../i18n';
-import { APP_VERSION } from '../../version';
 import { el, padSizeFor } from '../dom';
+import { topBar } from '../parts';
 import { DrawPad } from '../drawPad';
 import { animateReveal, DEFAULT_OVERLAY } from '../reveal';
 
@@ -33,8 +33,7 @@ export function showDrawScreen(root: HTMLElement, opts: DrawScreenOptions): () =
 
   const back = el('button', { class: 'icon-btn', text: '←', type: 'button', ariaLabel: t('result.toTitle') });
   const progress = el('span', { class: 'progress', text: opts.progress ? t('draw.progress', { n: opts.progress.n }) : '' });
-  const version = el('span', { class: 'version', text: t('app.version', { version: APP_VERSION }) });
-  const header = el('header', { class: 'bar' }, [back, progress, version]);
+  const header = topBar([back, progress]);
 
   const title = el('h2', { class: 'pref-name', text: t('draw.prompt', { name }) });
   const fill = el('div', { class: 'timer-fill' });

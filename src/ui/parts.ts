@@ -1,0 +1,104 @@
+// 画面の共通の部品：上の帯（バージョン・音）、つくった人のアプリへの導線、下の注意書き、小窓（採点のしくみ・プライバシー）
+
+import { config } from '../data';
+import { t } from '../i18n';
+import { onSoundChange, setSoundOn, soundOn } from '../settings';
+import { APP_VERSION } from '../version';
+import { button, el } from './dom';
+
+/** 上の帯。left は左に置くもの（戻るボタン・47県の進み具合など） */
+export function topBar(left: (Node | string)[] = []): HTMLElement {
+  const sound = el('button', { class: 'sound-btn', type: 'button' });
+  const sync = () => {
+    const on = soundOn();
+    sound.textContent = on ? '🔊' : '🔇';
+    sound.setAttribute('aria-label', on ? t('common.soundOn') : t('common.soundOff'));
+    sound.setAttribute('aria-pressed', String(on));
+  };
+  sync();
+  sound.addEventListener('click', () => setSoundOn(!soundOn()));
+  const bar = el('header', { class: 'bar' }, [
+    el('div', { class: 'bar-left' }, left),
+    el('div', { class: 'bar-right' }, [el('span', { class: 'version', text: t('app.version', { version: APP_VERSION }) }), sound]),
+  ]);
+  // 画面が替わって外れていたら、次の変更のときに購読をやめる
+  const off = onSoundChange(() => (bar.isConnected ? sync() : off()));
+  return bar;
+}
+
+function link(text: string, href: string, cls = 'link'): HTMLAnchorElement {
+  const a = el('a', { class: cls, text });
+  a.href = href;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  return a;
+}
+
+/** つくった人のアプリへの導線（F-07。UTM は config.links に付いている） */
+export function mainAppLinks(): HTMLElement {
+  return el('section', { class: 'links' }, [
+    el('h3', { text: t('links.heading') }),
+    el('div', { class: 'link-card' }, [
+      el('p', { text: t('links.tameru') }),
+      link(t('links.tameruButton'), config.links.tameru, 'btn'),
+    ]),
+    link(t('links.portal'), config.links.portal),
+    link(t('links.follow'), config.links.follow),
+  ]);
+}
+
+/** 小窓を開く。閉じるボタン・背景のクリック・Esc で閉じる */
+export function openModal(heading: string, body: Node[]): void {
+  const dialog = el('dialog', { class: 'modal' });
+  const close = () => {
+    dialog.close();
+    dialog.remove();
+  };
+  dialog.append(el('h2', { text: heading }), ...body, button(t('common.close'), close, 'btn'));
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) close();
+  });
+  dialog.addEventListener('close', () => dialog.remove());
+  document.body.append(dialog);
+  dialog.showModal();
+}
+
+export function openBasis(): void {
+  openModal(t('basis.heading'), [
+    el('p', { text: t('basis.body') }),
+    el('p', { text: t('basis.islands') }),
+    el('p', { text: t('basis.source') }),
+  ]);
+}
+
+const URLS = {
+  googlePolicy: 'https://policies.google.com/privacy?hl=ja',
+  optout: 'https://tools.google.com/dlpage/gaoptout?hl=ja',
+  vercelPolicy: 'https://vercel.com/legal/privacy-policy',
+};
+
+export function openPrivacy(): void {
+  openModal(t('privacy.heading'), [
+    ...(['p1', 'p2', 'p3', 'p4', 'p5'] as const).map((k) => el('p', { text: t(`privacy.${k}`) })),
+    el('p', { class: 'modal-links' }, [
+      link(t('privacy.googlePolicy'), URLS.googlePolicy),
+      link(t('privacy.optout'), URLS.optout),
+      link(t('privacy.vercelPolicy'), URLS.vercelPolicy),
+    ]),
+  ]);
+}
+
+/** 下の注意書き（免責。タイトルでは採点のしくみ・プライバシー・クレジットも） */
+export function footerNotes(withMenu: boolean): HTMLElement {
+  const children: Node[] = [el('p', { class: 'note', text: t('common.disclaimer') })];
+  if (withMenu) {
+    children.push(
+      el('p', { class: 'footer-menu' }, [
+        button(t('common.basisLink'), openBasis, 'text-btn'),
+        button(t('common.privacyLink'), openPrivacy, 'text-btn'),
+      ]),
+      el('p', { class: 'note', text: t('app.credit') }),
+    );
+  }
+  return el('footer', { class: 'footer' }, children);
+}
