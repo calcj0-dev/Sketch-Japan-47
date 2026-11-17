@@ -29,6 +29,7 @@
   },
   "result": {
     "score": "{score}点",
+    "comment": "「{comment}」",
     "next": "次の県",
     "retrySame": "同じ県をもう一回",
     "share": "Xでシェア",

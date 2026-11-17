@@ -57,7 +57,7 @@ export const REQUIRED_MESSAGES = [
   'common.soundOn', 'common.soundOff', 'common.close', 'common.disclaimer', 'common.islandsNote', 'common.basisLink', 'common.privacyLink',
   'title.single', 'title.challenge', 'title.challengeResume',
   'draw.prompt', 'draw.hint', 'draw.timeLeft', 'draw.tooShort', 'draw.timeUp', 'draw.progress',
-  'result.score', 'result.next', 'result.retrySame', 'result.share', 'result.shareImage', 'result.saveImage', 'result.toTitle',
+  'result.score', 'result.comment', 'result.next', 'result.retrySame', 'result.share', 'result.shareImage', 'result.saveImage', 'result.toTitle',
   'challengeResult.heading', 'challengeResult.average', 'challengeResult.best', 'challengeResult.worst', 'challengeResult.list', 'challengeResult.again',
   'share.single', 'share.challenge',
   'links.heading', 'links.tameru', 'links.tameruButton', 'links.portal', 'links.follow',
