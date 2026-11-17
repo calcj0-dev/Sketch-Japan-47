@@ -67,20 +67,13 @@ export function openBasis(): void {
   ]);
 }
 
-const URLS = {
-  googlePolicy: 'https://policies.google.com/privacy?hl=ja',
-  optout: 'https://tools.google.com/dlpage/gaoptout?hl=ja',
-  vercelPolicy: 'https://vercel.com/legal/privacy-policy',
-};
+const VERCEL_POLICY_URL = 'https://vercel.com/legal/privacy-policy';
 
+/** プライバシー（U5。計測は Vercel Analytics だけ。GA4 は使わない） */
 export function openPrivacy(): void {
   openModal(t('privacy.heading'), [
-    ...(['p1', 'p2', 'p3', 'p4', 'p5'] as const).map((k) => el('p', { text: t(`privacy.${k}`) })),
-    el('p', { class: 'modal-links' }, [
-      link(t('privacy.googlePolicy'), URLS.googlePolicy),
-      link(t('privacy.optout'), URLS.optout),
-      link(t('privacy.vercelPolicy'), URLS.vercelPolicy),
-    ]),
+    ...(['p1', 'p2', 'p3', 'p4'] as const).map((k) => el('p', { text: t(`privacy.${k}`) })),
+    el('p', { class: 'modal-links' }, [link(t('privacy.vercelPolicy'), VERCEL_POLICY_URL)]),
   ]);
 }
 
