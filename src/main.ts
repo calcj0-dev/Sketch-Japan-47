@@ -1,6 +1,7 @@
 // 起動
 import './style.css';
 import './data'; // 読み込みと検査。おかしなデータならここで止まる
+import { initAnalytics } from './analytics';
 import { unlockAudio } from './audio';
 import { zukanCount } from './core/zukan';
 import { savedChallenge, startChallenge } from './modes/challenge';
@@ -24,4 +25,5 @@ function toTitle(): void {
 // iOS などは、利用者が触ったときに音を鳴らせるようにする
 document.addEventListener('pointerdown', unlockAudio, { capture: true, passive: true });
 
+initAnalytics();
 toTitle();
