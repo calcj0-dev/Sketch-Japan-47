@@ -19,7 +19,9 @@ export function showChallengeResult(root: HTMLElement, s: ChallengeState, action
   const north = prefectures.map((p) => p.id);
   const sum = summarize(s, north);
   const name = (id: string) => t(`prefectures.${id}`);
-  const comment = (score: number) => t(`comments.${commentKey(score, config.comments)}`);
+  // 白紙（線がない）の県は「白紙で提出」
+  const keyOf = (id: string) => commentKey(s.scores[id] ?? 0, config.comments, (s.strokes[id]?.length ?? 0) < 3);
+  const comment = (id: string) => t(`comments.${keyOf(id)}`);
 
   const entries: Record<string, MapEntry> = {};
   for (const id of north) entries[id] = { score: s.scores[id] ?? 0, points: s.strokes[id] ?? [] };
@@ -43,12 +45,12 @@ export function showChallengeResult(root: HTMLElement, s: ChallengeState, action
       topBar(),
       el('h2', { class: 'result-heading', text: t('challengeResult.heading') }),
       el('p', { class: 'score', text: t('challengeResult.average', { score: sum.average }) }),
-      el('p', { class: 'best-worst', text: t('challengeResult.best', { name: name(sum.best.id), score: sum.best.score, comment: comment(sum.best.score) }) }),
-      el('p', { class: 'best-worst', text: t('challengeResult.worst', { name: name(sum.worst.id), score: sum.worst.score, comment: comment(sum.worst.score) }) }),
+      el('p', { class: 'best-worst', text: t('challengeResult.best', { name: name(sum.best.id), score: sum.best.score, comment: comment(sum.best.id) }) }),
+      el('p', { class: 'best-worst', text: t('challengeResult.worst', { name: name(sum.worst.id), score: sum.worst.score, comment: comment(sum.worst.id) }) }),
       el('h3', { class: 'list-heading', text: t('map.heading') }),
       imagePreview(map, t('map.heading')),
       shareButtons(
-        challengePost(sum.average, sum.worst.id, sum.worst.score, commentKey(sum.worst.score, config.comments)),
+        challengePost(sum.average, sum.worst.id, sum.worst.score, keyOf(sum.worst.id)),
         map,
         'sketch-japan-47-map.png',
       ),

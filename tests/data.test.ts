@@ -35,7 +35,7 @@ describe('T-06 形のデータの検査', () => {
 
   it('i18n に全県の名前・全段階の一言がない と止まる', () => {
     expect(() => validateMessages(messages, config, prefData)).not.toThrow();
-    for (const k of ['prefectures.JP-47', 'comments.c0', 'draw.hint']) {
+    for (const k of ['prefectures.JP-47', 'comments.c0', 'comments.blank', 'draw.hint']) {
       const m = { ...messages };
       delete m[k];
       expect(() => validateMessages(m, config, prefData), k).toThrow(DataError);

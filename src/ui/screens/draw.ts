@@ -108,7 +108,7 @@ export function showDrawScreen(root: HTMLElement, opts: DrawScreenOptions): () =
     cancelAnimationFrame(raf);
     pad.setEnabled(false);
     const r = judgeStroke(points, pref.points, size, config.stroke, config.scoring);
-    const outcome: DrawOutcome = { ...r, points, timeout, commentKey: commentKey(r.score, config.comments) };
+    const outcome: DrawOutcome = { ...r, points, timeout, commentKey: commentKey(r.score, config.comments, r.blank) };
     screen.classList.add('revealing');
     hint.classList.add('hidden');
     // 描いた線を消して、そろえた絵に描き直す

@@ -126,6 +126,7 @@ export function validateMessages(m: Messages, c: Config, d: PrefectureData): voi
   const missing: string[] = [];
   for (const k of REQUIRED_MESSAGES) if (!m[k]) missing.push(k);
   for (const r of c.comments) if (!m[`comments.${r.key}`]) missing.push(`comments.${r.key}`);
+  if (!m['comments.blank']) missing.push('comments.blank');
   for (const p of d.prefectures) if (!m[`prefectures.${p.id}`]) missing.push(`prefectures.${p.id}`);
   if (missing.length) fail(`i18n に足りない文言：${missing.join(', ')}`);
 }
