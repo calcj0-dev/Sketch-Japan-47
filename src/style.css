@@ -203,3 +203,9 @@ a.btn { text-decoration: none; display: block; text-align: center; }
 .cell-name { font-size: 12px; margin-top: 4px; }
 .cell-score { font-size: 12px; font-weight: 700; color: var(--accent); min-height: 1.2em; }
 .cell.empty .cell-name { color: var(--muted); }
+
+.share-row { display: flex; flex-wrap: wrap; gap: 10px; width: 100%; margin: 12px 0; }
+.share-row .btn { flex: 1 1 40%; }
+.share-row .btn.x { background: #111; border-color: #111; color: #fff; flex-basis: 100%; }
+.share-row .btn { font-size: 15px; padding: 12px 8px; }
+.image-preview { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border); display: block; }

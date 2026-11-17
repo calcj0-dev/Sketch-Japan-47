@@ -1,4 +1,4 @@
-// S4 47県の結果（F-06）。「あなたの日本地図」の画像・シェア・画像の保存は #7 で足す
+// S4 47県の結果（F-06）。「あなたの日本地図」はこの回の47枚で作る
 
 import { config, prefectures } from '../../data';
 import { summarize, type ChallengeState } from '../../core/challenge';
@@ -6,6 +6,9 @@ import { commentKey } from '../../core/comment';
 import { t } from '../../i18n';
 import { button, el } from '../dom';
 import { footerNotes, mainAppLinks, topBar } from '../parts';
+import { imagePreview, shareButtons } from '../shareButtons';
+import { challengePost } from '../../share/postText';
+import { renderMapImage, type MapEntry } from '../../share/mapImage';
 
 export interface ChallengeResultActions {
   onAgain: () => void;
@@ -17,6 +20,10 @@ export function showChallengeResult(root: HTMLElement, s: ChallengeState, action
   const sum = summarize(s, north);
   const name = (id: string) => t(`prefectures.${id}`);
   const comment = (score: number) => t(`comments.${commentKey(score, config.comments)}`);
+
+  const entries: Record<string, MapEntry> = {};
+  for (const id of north) entries[id] = { score: s.scores[id] ?? 0, points: s.strokes[id] ?? [] };
+  const map = renderMapImage(entries, sum.average);
 
   const list = el('ol', { class: 'score-list' },
     prefectures.map((p) => {
@@ -38,7 +45,13 @@ export function showChallengeResult(root: HTMLElement, s: ChallengeState, action
       el('p', { class: 'score', text: t('challengeResult.average', { score: sum.average }) }),
       el('p', { class: 'best-worst', text: t('challengeResult.best', { name: name(sum.best.id), score: sum.best.score, comment: comment(sum.best.score) }) }),
       el('p', { class: 'best-worst', text: t('challengeResult.worst', { name: name(sum.worst.id), score: sum.worst.score, comment: comment(sum.worst.score) }) }),
-      // 「あなたの日本地図」は #7
+      el('h3', { class: 'list-heading', text: t('map.heading') }),
+      imagePreview(map, t('map.heading')),
+      shareButtons(
+        challengePost(sum.average, sum.worst.id, sum.worst.score, commentKey(sum.worst.score, config.comments)),
+        map,
+        'sketch-japan-47-map.png',
+      ),
       el('div', { class: 'buttons' }, [
         button(t('challengeResult.again'), actions.onAgain, 'btn primary'),
         button(t('result.toTitle'), actions.onTitle, 'btn ghost'),

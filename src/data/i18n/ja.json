@@ -69,7 +69,11 @@
   },
   "share": {
     "single": "{name}を描いたら{score}点「{comment}」 #{hashtag}",
+    "zukan": "図鑑の47都道府県がそろいました。自己ベストの平均{avg}点 #{hashtag}",
     "challenge": "47都道府県を描いたら平均{avg}点。一番ひどかったのは{worstName}（{worstScore}点「{worstComment}」） #{hashtag}"
+  },
+  "map": {
+    "heading": "あなたの日本地図"
   },
   "image": {
     "single": { "score": "{score}点", "footer": "島は除いています" },

@@ -1,4 +1,4 @@
-// 図鑑の画面（要件定義書 3.2 #16）。47県のマス（北から順）。「あなたの日本地図」は #7 で足す
+// 図鑑の画面（要件定義書 3.2 #16）。47県のマス（北から順）。47県そろったら自己ベストで「あなたの日本地図」
 
 import { prefectures } from '../../data';
 import { isZukanComplete, zukanCount, type Zukan } from '../../core/zukan';
@@ -6,6 +6,9 @@ import { t } from '../../i18n';
 import { el } from '../dom';
 import { footerNotes, topBar } from '../parts';
 import { DEFAULT_OVERLAY, drawOverlay } from '../reveal';
+import { imagePreview, shareButtons } from '../shareButtons';
+import { zukanPost } from '../../share/postText';
+import { renderMapImage } from '../../share/mapImage';
 
 const THUMB = 88;
 
@@ -46,10 +49,21 @@ export function showZukanScreen(root: HTMLElement, z: Zukan, onBack: () => void)
       el('h2', { class: 'result-heading', text: t('zukan.heading') }),
       el('p', { class: 'zukan-count', text: t('zukan.count', { n: zukanCount(z, ids) }) }),
       el('p', { class: 'note', text: complete ? t('zukan.complete') : t('zukan.hint') }),
-      // 47県そろったら「あなたの日本地図」（#7）
+      ...(complete ? mapBlock(z, ids) : []),
       grid,
       footerNotes(false),
     ]),
   );
   window.scrollTo(0, 0);
+}
+
+/** 47県そろったときの「あなたの日本地図」（自己ベストの平均点） */
+function mapBlock(z: Zukan, ids: readonly string[]): HTMLElement[] {
+  const avg = Math.round(ids.reduce((a, id) => a + (z[id]?.score ?? 0), 0) / ids.length);
+  const map = renderMapImage(z, avg);
+  return [
+    el('h3', { class: 'list-heading', text: t('map.heading') }),
+    imagePreview(map, t('map.heading')),
+    shareButtons(zukanPost(avg), map, 'sketch-japan-47-zukan.png'),
+  ];
 }
