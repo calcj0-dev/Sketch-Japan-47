@@ -86,7 +86,9 @@ export function footerNotes(withMenu: boolean): HTMLElement {
         button(t('common.basisLink'), openBasis, 'text-btn'),
         button(t('common.privacyLink'), openPrivacy, 'text-btn'),
       ]),
-      el('p', { class: 'note', text: t('app.credit') }),
+      // つくった人（X へのリンク）と、その下に Ted App Lab
+      el('p', { class: 'footer-link' }, [link(t('app.credit'), config.links.follow)]),
+      el('p', { class: 'footer-link' }, [link(t('links.portal'), config.links.portal)]),
     );
   }
   return el('footer', { class: 'footer' }, children);

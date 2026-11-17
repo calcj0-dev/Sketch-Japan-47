@@ -274,3 +274,4 @@ a.btn { text-decoration: none; display: block; text-align: center; }
 .mode-desc { font-size: 13px; opacity: 0.85; }
 .zukan-bar { display: block; height: 8px; border-radius: 4px; background: var(--border); overflow: hidden; }
 .zukan-bar-fill { display: block; height: 100%; background: var(--accent); }
+.footer-link { margin: 6px 0; font-size: 13px; }
