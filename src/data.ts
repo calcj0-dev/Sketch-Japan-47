@@ -29,7 +29,7 @@ export interface Config {
   sounds: unknown;
   hashtag: string;
   storageKey: string;
-  links: { tameru: string; portal: string; follow: string };
+  links: { portal: string; follow: string };
 }
 
 export interface Prefecture {
@@ -60,7 +60,7 @@ export const REQUIRED_MESSAGES = [
   'result.score', 'result.comment', 'result.next', 'result.retrySame', 'result.share', 'result.shareImage', 'result.saveImage', 'result.toTitle',
   'challengeResult.heading', 'challengeResult.average', 'challengeResult.best', 'challengeResult.worst', 'challengeResult.list', 'challengeResult.again',
   'share.single', 'share.challenge',
-  'links.heading', 'links.tameru', 'links.tameruButton', 'links.portal', 'links.follow',
+  'links.heading', 'links.portal', 'links.follow',
   'basis.heading', 'basis.body', 'basis.islands', 'basis.source',
   'privacy.heading', 'privacy.p1', 'privacy.p2', 'privacy.p3', 'privacy.p4', 'privacy.p5',
   'privacy.googlePolicy', 'privacy.optout', 'privacy.vercelPolicy',

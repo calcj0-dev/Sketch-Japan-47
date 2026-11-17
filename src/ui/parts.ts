@@ -34,15 +34,11 @@ function link(text: string, href: string, cls = 'link'): HTMLAnchorElement {
   return a;
 }
 
-/** つくった人のアプリへの導線（F-07。UTM は config.links に付いている） */
+/** つくった人のアプリへの導線（F-07。Ted App Lab と X だけ：U4。UTM は config.links に付いている） */
 export function mainAppLinks(): HTMLElement {
   return el('section', { class: 'links' }, [
     el('h3', { text: t('links.heading') }),
-    el('div', { class: 'link-card' }, [
-      el('p', { text: t('links.tameru') }),
-      link(t('links.tameruButton'), config.links.tameru, 'btn'),
-    ]),
-    link(t('links.portal'), config.links.portal),
+    link(t('links.portal'), config.links.portal, 'btn'),
     link(t('links.follow'), config.links.follow),
   ]);
 }
