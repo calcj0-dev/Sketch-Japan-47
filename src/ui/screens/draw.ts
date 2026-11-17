@@ -1,5 +1,6 @@
 // S2 描く画面（設計書 2章・1.3）。指を離したら採点し、そのまま本物を重ねる演出まで行う
 
+import { playResult, sfx } from '../../audio';
 import { config, type Prefecture } from '../../data';
 import { commentKey } from '../../core/comment';
 import type { Point } from '../../core/score';
@@ -90,7 +91,8 @@ export function showDrawScreen(root: HTMLElement, opts: DrawScreenOptions): () =
       lastSec = sec;
       timeText.textContent = t('draw.timeLeft', { sec });
       timer.classList.toggle('warn', sec <= config.warnAtSec);
-      // 残り5秒の「チックタック」は #8
+      // 残り5秒から1秒ごとに「チックタック」
+      if (sec > 0 && sec <= config.warnAtSec) sfx.tick();
     }
     if (left <= 0) {
       const points = pad.drawing ? pad.cancel() : [];
@@ -112,10 +114,12 @@ export function showDrawScreen(root: HTMLElement, opts: DrawScreenOptions): () =
     // 描いた線を消して、そろえた絵に描き直す
     const canvas = pad.canvas;
     scoreEl.classList.remove('hidden');
+    sfx.rattle(opts.revealMs);
     void animateReveal(canvas, size, r.blank ? [] : points, pref.points, r.score, opts.revealMs, (n) => {
       scoreEl.textContent = t('result.score', { score: n });
     }).then(() => {
       if (!screen.isConnected) return;
+      playResult(r.score);
       opts.onRevealed(outcome, after);
     });
   }
