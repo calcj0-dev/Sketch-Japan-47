@@ -5,8 +5,8 @@
   "scoring": {
     "method": "iou-linear",
     "grid": 256,
-    "iouZero": 0.30,
-    "iouFull": 0.95
+    "iouZero": 0.20,
+    "iouFull": 0.85
   },
   "stroke": {
     "minPoints": 8,
