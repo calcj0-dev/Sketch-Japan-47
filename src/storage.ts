@@ -1,9 +1,9 @@
-// 端末への保存（設計書 5.3）。保存するのは音の設定と途中のチャレンジだけ。
+// 端末への保存（設計書 5.3）。保存するのは音の設定・途中のチャレンジ・図鑑だけ。
 // 保存できない環境（プライベートブラウズなど）では初期値で動く
 
 import { config } from './data';
 
-export type StorageKey = 'sound' | 'challenge';
+export type StorageKey = 'sound' | 'challenge' | 'zukan';
 
 const key = (k: StorageKey) => `${config.storageKey}.${k}`;
 

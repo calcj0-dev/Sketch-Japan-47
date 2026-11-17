@@ -10,6 +10,7 @@ import { load, remove, save } from '../storage';
 import { button, el } from '../ui/dom';
 import { showChallengeResult } from '../ui/screens/challengeResult';
 import { showDrawScreen } from '../ui/screens/draw';
+import { addToZukan } from './zukanStore';
 
 const ids = prefectures.map((p) => p.id);
 const byId = new Map(prefectures.map((p) => [p.id, p]));
@@ -49,6 +50,7 @@ function drawNext(root: HTMLElement, toTitle: () => void, s: ChallengeState): vo
     onRevealed: (outcome, after) => {
       const next = record(s, id, outcome.score, outcome.blank ? [] : outcome.points);
       persist(next);
+      addToZukan(id, outcome.score, outcome.points, outcome.blank);
       const last = isComplete(next);
       after.append(
         el('p', { class: 'comment', text: t('result.comment', { comment: t(`comments.${outcome.commentKey}`) }) }),

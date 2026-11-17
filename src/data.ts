@@ -55,7 +55,8 @@ export interface PrefectureData {
 export const REQUIRED_MESSAGES = [
   'app.name', 'app.tagline', 'app.version', 'app.credit',
   'common.soundOn', 'common.soundOff', 'common.close', 'common.islandsNote', 'common.basisLink', 'common.privacyLink',
-  'title.single', 'title.challenge', 'title.challengeResume',
+  'title.single', 'title.challenge', 'title.challengeResume', 'title.zukan',
+  'zukan.heading', 'zukan.count', 'zukan.hint', 'zukan.complete', 'zukan.unknown',
   'challenge.next', 'challenge.toResult', 'challenge.quit',
   'draw.prompt', 'draw.hint', 'draw.timeLeft', 'draw.tooShort', 'draw.timeUp', 'draw.progress',
   'result.score', 'result.comment', 'result.next', 'result.retrySame', 'result.share', 'result.shareImage', 'result.saveImage', 'result.toTitle',

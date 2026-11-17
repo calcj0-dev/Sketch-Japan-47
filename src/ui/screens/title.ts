@@ -8,8 +8,11 @@ import { footerNotes, topBar } from '../parts';
 export interface TitleActions {
   onSingle: () => void;
   onChallenge: () => void;
+  onZukan: () => void;
   /** 途中のチャレンジ（あれば「続きから n/47」） */
   saved?: ChallengeState;
+  /** 図鑑に入っている県の数 */
+  zukanCount: number;
 }
 
 export function showTitleScreen(root: HTMLElement, a: TitleActions): void {
@@ -22,6 +25,7 @@ export function showTitleScreen(root: HTMLElement, a: TitleActions): void {
       el('div', { class: 'buttons' }, [
         button(t('title.single'), a.onSingle, 'btn primary'),
         button(challengeLabel, a.onChallenge, 'btn'),
+        button(t('title.zukan', { n: a.zukanCount }), a.onZukan, 'btn'),
       ]),
       el('p', { class: 'note', text: t('common.islandsNote') }),
       footerNotes(true),
