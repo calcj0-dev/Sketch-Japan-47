@@ -1,0 +1,53 @@
+// S4 47県の結果（F-06）。「あなたの日本地図」の画像・シェア・画像の保存は #7 で足す
+
+import { config, prefectures } from '../../data';
+import { summarize, type ChallengeState } from '../../core/challenge';
+import { commentKey } from '../../core/comment';
+import { t } from '../../i18n';
+import { button, el } from '../dom';
+import { footerNotes, mainAppLinks, topBar } from '../parts';
+
+export interface ChallengeResultActions {
+  onAgain: () => void;
+  onTitle: () => void;
+}
+
+export function showChallengeResult(root: HTMLElement, s: ChallengeState, actions: ChallengeResultActions): void {
+  const north = prefectures.map((p) => p.id);
+  const sum = summarize(s, north);
+  const name = (id: string) => t(`prefectures.${id}`);
+  const comment = (score: number) => t(`comments.${commentKey(score, config.comments)}`);
+
+  const list = el('ol', { class: 'score-list' },
+    prefectures.map((p) => {
+      const sc = s.scores[p.id] ?? 0;
+      const item = el('li', {}, [
+        el('span', { class: 'name', text: name(p.id) }),
+        el('span', { class: 'bar-mini' }, [el('span', { class: 'bar-mini-fill' })]),
+        el('span', { class: 'pt', text: t('challengeResult.item', { score: sc }) }),
+      ]);
+      (item.querySelector('.bar-mini-fill') as HTMLElement).style.width = `${sc}%`;
+      return item;
+    }),
+  );
+
+  root.replaceChildren(
+    el('main', { class: 'screen challenge-result' }, [
+      topBar(),
+      el('h2', { class: 'result-heading', text: t('challengeResult.heading') }),
+      el('p', { class: 'score', text: t('challengeResult.average', { score: sum.average }) }),
+      el('p', { class: 'best-worst', text: t('challengeResult.best', { name: name(sum.best.id), score: sum.best.score, comment: comment(sum.best.score) }) }),
+      el('p', { class: 'best-worst', text: t('challengeResult.worst', { name: name(sum.worst.id), score: sum.worst.score, comment: comment(sum.worst.score) }) }),
+      // 「あなたの日本地図」は #7
+      el('div', { class: 'buttons' }, [
+        button(t('challengeResult.again'), actions.onAgain, 'btn primary'),
+        button(t('result.toTitle'), actions.onTitle, 'btn ghost'),
+      ]),
+      el('h3', { class: 'list-heading', text: t('challengeResult.list') }),
+      list,
+      mainAppLinks(),
+      footerNotes(false),
+    ]),
+  );
+  window.scrollTo(0, 0);
+}

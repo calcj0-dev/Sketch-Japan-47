@@ -52,6 +52,7 @@ export function showDrawScreen(root: HTMLElement, opts: DrawScreenOptions): () =
 
   const screen = el('main', { class: 'screen draw' }, [header, title, timer, stage, message, scoreEl, hint, after, note]);
   root.replaceChildren(screen);
+  window.scrollTo(0, 0);
 
   let finished = false;
   let raf = 0;
